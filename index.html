@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
+        }
+
+        .box {
+            width: 200px;
+            height: 150px;
+            background: #e74c3c;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .box::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 85px;
+            width: 30px;
+            height: 170px;
+            background: #f1c40f;
+            border-radius: 5px;
+        }
+
+        .box::after {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: -10px;
+            width: 220px;
+            height: 30px;
+            background: #f1c40f;
+            border-radius: 5px;
+        }
+
+        .lid {
+            width: 200px;
+            height: 50px;
+            background: #c0392b;
+            border-radius: 10px 10px 5px 5px;
+            position: absolute;
+            top: -25px;
+            left: 0;
+            transition: all 0.8s ease;
+            transform-origin: bottom;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .bow {
+            position: absolute;
+            top: -40px;
+            left: 85px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .bow::before,
+        .bow::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 20px;
+            background: #f39c12;
+            border-radius: 50% 50% 50% 0;
+        }
+
+        .bow::before {
+            left: -8px;
+            transform: rotate(-45deg);
+        }
+
+        .bow::after {
+            right: -8px;
+            transform: rotate(45deg);
+        }
+
+        .open-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.3);
+        }
+
+        .gift-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .gift-content.show {
+            display: block;
+        }
+
+        .images-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .image-placeholder {
+            width: 200px;
+            height: 200px;
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            background: #f9f9f9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .message h2 {
+            color: #f1c40f;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .opened {
+            transform: rotateX(-100deg);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f1c40f;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .images-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .gift-content {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .message {
+                font-size: 14px;
+            }
+            
+            /* Ajustar tamaño de imágenes en móvil para 4 imágenes */
+            .image-placeholder {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gift-box" id="giftBox">
+            <div class="lid" id="lid">
+                <div class="bow"></div>
+            </div>
+            <div class="box"></div>
+            <div class="sparkles" id="sparkles"></div>
+        </div>
+        
+        <button class="open-btn" id="openBtn">ABRIR</button>
+        
+        <div class="gift-content" id="giftContent">
+            <div class="message">
+                <h2>🎉 ¡Feliz Cumpleaños Best! 🎉</h2>
+                <p>
+                    Que tengas una muy bonita noche y bonito día mañana. 
+                    Eres una persona extraordinaria, aunque hayan pasado cosas, 
+                    se te quiere mucho best y perdón por todo. 
+                    ¡Feliz cumpleaños, pásatela súper! 💖
+                </p>
+            </div>
+            
+            <div class="images-container">
+                <div class="image-placeholder" id="placeholder1">
+                    <img src="besssssss.jpg" alt="Celebración de cumpleaños">
+                </div>
+                <div class="image-placeholder" id="placeholder2">
+                    <img src="bas.jpg" alt="Pastel de cumpleaños">
+                </div>
+                <div class="image-placeholder" id="placeholder3">
+                    <img src="Imagen de WhatsApp 2025-09-21 a las 23.18.55_e3d168bb.jpg" alt="Regalos de cumpleaños">
+                </div>
+                <div class="image-placeholder" id="placeholder4">
+                    <img src="Imagen de WhatsApp 2025-09-21 a las 23.18.54_af770d34.jpg" alt="Fiesta de cumpleaños">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('openBtn');
+        const lid = document.getElementById('lid');
+        const giftContent = document.getElementById('giftContent');
+        const giftBox = document.getElementById('giftBox');
+        const sparkles = document.getElementById('sparkles');
+
+        // Crear partículas brillantes
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                sparkles.appendChild(sparkle);
+            }
+        }
+
+        openBtn.addEventListener('click', function() {
+            lid.classList.add('opened');
+            createSparkles();
+            
+            setTimeout(() => {
+                giftBox.style.display = 'none';
+                openBtn.style.display = 'none';
+                giftContent.classList.add('show');
+            }, 800);
+        });
+    </script>
+</body>
+</html>
